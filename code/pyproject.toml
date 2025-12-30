@@ -1,7 +1,7 @@
 [project]
 name = "code"
 version = "0.1.0"
-description = "Add your description here"
+description = "Starter template for IEEE research papers with integrated Python code experiments"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
