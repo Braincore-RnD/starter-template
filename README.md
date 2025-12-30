@@ -3,15 +3,16 @@
 Welcome to the **Research Paper Starter Template**! This repository is designed to streamline the workflow of writing academic papers (specifically targeted at IEEE conferences/journals, but adaptable) while managing the associated experimental code.
 
 It provides a clean separation of concerns:
-*   **`code/`**: For your Python scripts, Jupyter notebooks (`.ipynb`), and experimental data.
-*   **`paper/`**: For your LaTeX manuscript, modularized for easy collaboration and maintenance.
+
+- **`code/`**: For your Python scripts, Jupyter notebooks (`.ipynb`), and experimental data.
+- **`paper/`**: For your LaTeX manuscript, modularized for easy collaboration and maintenance.
 
 ## 🚀 Features
 
-*   **Modular LaTeX Structure**: The main paper is split into logical sections (`introduction.tex`, `methodology.tex`, etc.) in the `paper/sections/` folder.
-*   **Cross-Platform Build Script**: A Python-based build script (`paper/build.py`) that handles the full LaTeX compilation cycle (`pdflatex` -> `bibtex` -> `pdflatex`) automatically. Works on Windows, Linux, and macOS.
-*   **Smart Compilation**: The build script checks if your PDF is locked (open in a viewer) and waits for you to close it before retrying, preventing common write errors.
-*   **Clean Repository**: configured `.gitignore` to keep your repo free of LaTeX build artifacts (`.aux`, `.log`, etc.).
+- **Modular LaTeX Structure**: The main paper is split into logical sections (`introduction.tex`, `methodology.tex`, etc.) in the `paper/sections/` folder.
+- **Cross-Platform Build Script**: A Python-based build script (`paper/build.py`) that handles the full LaTeX compilation cycle (`pdflatex` -> `bibtex` -> `pdflatex`) automatically. Works on Windows, Linux, and macOS.
+- **Smart Compilation**: The build script checks if your PDF is locked (open in a viewer) and waits for you to close it before retrying, preventing common write errors.
+- **Clean Repository**: configured `.gitignore` to keep your repo free of LaTeX build artifacts (`.aux`, `.log`, etc.).
 
 ## 📂 Directory Structure
 
@@ -40,21 +41,24 @@ It provides a clean separation of concerns:
 
 1.  **Python 3.x**: Required for the build script and experimental code.
 2.  **LaTeX Distribution**:
-    *   **Windows**: [MiKTeX](https://miktex.org/) (Recommended) or TeX Live.
-    *   **macOS**: [MacTeX](https://www.tug.org/mactex/).
-    *   **Linux**: TeX Live (`sudo apt install texlive-full`).
+    - **Windows**: [MiKTeX](https://miktex.org/) (Recommended) or TeX Live.
+    - **macOS**: [MacTeX](https://www.tug.org/mactex/).
+    - **Linux**: TeX Live (`sudo apt install texlive-full`).
 
 ## 📖 How to Use
 
 ### 1. Writing the Paper
+
 Navigate to `paper/sections/` and edit the individual `.tex` files.
-*   `sections/introduction.tex`
-*   `sections/methodology.tex`
-*   etc.
+
+- `sections/introduction.tex`
+- `sections/methodology.tex`
+- etc.
 
 The `main.tex` file acts as the skeleton. You mostly won't need to touch it unless you are adding new packages or changing the overall layout.
 
 ### 2. Building the PDF
+
 Forget about complex terminal commands. We have a script for that.
 
 1.  Open your terminal in the project root.
@@ -63,23 +67,27 @@ Forget about complex terminal commands. We have a script for that.
     python paper/build.py
     ```
 3.  The script will:
-    *   Check if `main.pdf` is locked/open.
-    *   Run `pdflatex` (generation 1).
-    *   Run `bibtex` (citation linking).
-    *   Run `pdflatex` twice more (cross-reference resolution).
-    *   Output the final `main.pdf`.
+    - Check if `main.pdf` is locked/open.
+    - Run `pdflatex` (generation 1).
+    - Run `bibtex` (citation linking).
+    - Run `pdflatex` twice more (cross-reference resolution).
+    - Output the final `main.pdf`.
 
-### 3. working with Code
+### 3. Working with Code
+
 The `code/` directory is a standard Python project.
-*   Define dependencies in `pyproject.toml`.
-*   Place your Jupyter notebooks and scripts here.
-*   (Optional) configure your code to save generated plots/figures directly to `../paper/generated/` so your paper updates automatically when you rerun experiments!
+
+- Define dependencies in `pyproject.toml`.
+- Place your Jupyter notebooks and scripts here.
+- (Optional) configure your code to save generated plots/figures directly to `../paper/generated/` so your paper updates automatically when you rerun experiments!
 
 ## 🤝 Authors
-*   **Braincore**
-*   **Eric Julianto**
-*   **Dian Alhusari**
-*   **Safrizal Ardana Ardiyansa**
+
+- **Braincore**
+- **Eric Julianto**
+- **Dian Alhusari**
+- **Safrizal Ardana Ardiyansa**
 
 ---
-*Happy Researching!* 🎓
+
+_Happy Researching!_ 🎓
