@@ -1,0 +1,540 @@
+---
+title: Quarto Example
+author: Eric Julianto
+format:
+    revealjs:
+        theme: white
+        css: custom.css
+        resources: [logo-white.png]
+        slide-number: c/t
+        chalkboard:
+            buttons: true
+            theme: whiteboard
+        transition: slide
+        background-transition: fade
+        code-copy: true
+        code-fold: true
+        code-overflow: wrap
+        # scrollable: true
+        smaller: false
+        incremental: false
+        preview-links: auto
+        logo: "logo.png"
+        footer: ""
+        margin: 0.1
+        fig-responsive: true
+        highlight-style: github
+        html-math-method: katex
+bibliography: references.bib
+---
+
+# Hello World! {#hello-world background-color="#2c3e50"}
+Ini adalah test
+
+## Profile / Bio Slide {#profile-slide .smaller}
+
+:::: {.columns}
+::: {.column width="30%"}
+
+![](./images/profile.jpg){width=200 style="border-radius: 50%; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;"}
+
+<div style="font-size: 0.9em; line-height: 1.8; text-align: center;">
+
+**x.com**/username
+
+**github.com**/username
+
+</div>
+:::
+
+::: {.column width="70%"}
+<div style="padding-left: 30px;">
+
+**Work Experience**
+
+<style>
+.compact-list li { margin-bottom: 0.3em; line-height: 1.2; }
+.compact-list .period { font-size: 0.85em; color: #666; display: block; margin-top: -0.2em; }
+</style>
+
+<div class="compact-list">
+
+- Senior Developer at Tech Corp
+<span class="period">(2023 - Now)</span>
+
+- Software Engineer at StartUp Inc
+<span class="period">(2020 - 2023)</span>
+
+</div>
+
+**Education**
+
+- Computer Science at University Name
+
+</div>
+:::
+::::
+
+## Apa yahhh {#apa-yahhh}
+
+
+![](./images/demo.jpg){fig-align="center" width="300"}
+
+<div style="text-align: center; font-size: 0.8em; color: gray;">
+*Insert meme here*
+</div>
+
+# {#hello-image}
+
+![](./images/hello-hello-everybody.jpg){width=300 style="margin: 20px auto; display: block;"}
+
+## Contoh Tabel {#contoh-tabel}
+
+| Nama      | Umur | Kota      | Pekerjaan     |
+|-----------|------|-----------|---------------|
+| Alice     | 25   | Jakarta   | Developer     |
+| Bob       | 30   | Bandung   | Designer      |
+| Charlie   | 28   | Surabaya  | Data Analyst  |
+| Diana     | 32   | Yogya     | Project Manager |
+
+: Tabel Data Karyawan {#tbl-karyawan}
+
+## Contoh Flowchart {#contoh-flowchart}
+
+```{mermaid}
+flowchart TD
+    A[Start] --> B{Is it working?}
+    B -->|Yes| C[Great!]
+    B -->|No| D[Debug the code]
+    D --> E[Fix the bug]
+    E --> B
+    C --> F[Deploy to production]
+    F --> G[End]
+
+    style A fill:#e1f5fe
+    style G fill:#c8e6c9
+    style C fill:#fff3e0
+    style D fill:#ffebee
+```
+
+## Contoh PlantUML {#contoh-plantuml}
+
+
+![](./images/system_architecture.png){fig-align="center" width=40%}
+
+<div style="text-align: center; font-size: 0.8em; color: gray;">
+*Enterprise Architecture Diagram*
+</div>
+
+## LSTM Math {#lstm-math .smaller}
+
+LSTM gating mechanism:
+
+$$f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)$$ {#eq-forget}
+$$i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)$$ {#eq-input}
+$$C_t = f_t * C_{t-1} + i_t * \tilde{C}_t$$ {#eq-cell}
+$$h_t = o_t * \tanh(C_t)$$ {#eq-hidden}
+
+Cross-ref: @eq-forget (forget), @eq-cell (update)
+
+## LaTeX Equations {#latex-equations}
+
+::: columns
+::: {.column width="40%"}
+``` tex
+\begin{gather*}
+a_1=b_1+c_1\\
+a_2=b_2+c_2-d_2+e_2
+\end{gather*}
+
+\begin{align}
+a_{11}& =b_{11}&
+  a_{12}& =b_{12}\\
+a_{21}& =b_{21}&
+  a_{22}& =b_{22}+c_{22}
+\end{align}
+```
+:::
+
+::: {.column width="60%"}
+```{=tex}
+\begin{gather*}
+a_1=b_1+c_1\\
+a_2=b_2+c_2-d_2+e_2
+\end{gather*}
+```
+```{=tex}
+\begin{align}
+a_{11}& =b_{11}&
+  a_{12}& =b_{12}\\
+a_{21}& =b_{21}&
+  a_{22}& =b_{22}+c_{22}
+\end{align}
+```
+:::
+:::
+
+::: footer
+Learn more: [LaTeX Equations](https://quarto.org/docs/authoring/markdown-basics.html#equations)
+:::
+
+## Code Example {#code-example .smaller}
+
+```python
+import torch
+import torch.nn as nn
+
+class LSTM(nn.Module):
+    def __init__(self, input_size, hidden_size):
+        super(LSTM, self).__init__()
+        self.hidden_size = hidden_size
+
+        # Gates: forget, input, output
+        self.W_f = nn.Linear(input_size + hidden_size, hidden_size)
+        self.W_i = nn.Linear(input_size + hidden_size, hidden_size)
+        self.W_o = nn.Linear(input_size + hidden_size, hidden_size)
+        self.W_C = nn.Linear(input_size + hidden_size, hidden_size)
+
+    def forward(self, x, h_prev, C_prev):
+        combined = torch.cat([x, h_prev], dim=1)
+
+        f_t = torch.sigmoid(self.W_f(combined))  # Forget gate
+        i_t = torch.sigmoid(self.W_i(combined))  # Input gate
+        C_tilde = torch.tanh(self.W_C(combined)) # Candidate
+        C_t = f_t * C_prev + i_t * C_tilde      # Cell state
+
+        o_t = torch.sigmoid(self.W_o(combined))  # Output gate
+        h_t = o_t * torch.tanh(C_t)              # Hidden state
+
+        return h_t, C_t
+```
+
+## Code Highlighting {#code-highlighting .smaller}
+
+```javascript
+// Async/await with error handling
+async function fetchUserData(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const userData = await response.json();
+        return userData;
+    } catch (error) {
+        console.error('Failed to fetch user:', error);
+        return null;
+    }
+}
+```
+<br />
+```rust
+// Pattern matching & Option handling
+fn process_config(config: Option<Config>) -> Result<String, ConfigError> {
+    match config {
+        Some(cfg) if cfg.is_valid() => {
+            println!("Processing config: {}", cfg.name);
+            Ok(format!("Config {} loaded", cfg.name))
+        },
+        Some(_) => Err(ConfigError::Invalid),
+        None => Err(ConfigError::Missing),
+    }
+}
+```
+
+# Advanced Layouts {#advanced-layouts}
+Variasi Layout
+
+## Two Columns: Text & Text {#col-text-text}
+
+::::: {.columns}
+
+:::: {.column width="50%"}
+### Left Side
+
+- Feature A
+- Feature B
+- Feature C
+
+Detailed explanation of the left side content.
+::::
+
+:::: {.column width="50%"}
+### Right Side
+
+- Benefit X
+- Benefit Y
+- Benefit Z
+
+Comparison or additional details on the right side.
+::::
+
+:::::
+
+## Two Columns: Text & Image {#col-text-image}
+
+::::: {.columns}
+
+:::: {.column width="50%"}
+### Context
+
+Here is the description of the system architecture shown on the right.
+
+- Modular design
+- Scalable components
+- Secure data flow
+::::
+
+:::: {.column width="50%"}
+![](./images/tau-apa-tentang-sql-agent.png){fig-align="center" width="100%"}
+
+<div style="text-align: center; font-size: 0.6em; color: gray;">
+*Figure 1: System Architecture*
+</div>
+::::
+
+:::::
+
+## Two Columns: Image & Text {#col-image-text}
+
+::::: {.columns}
+
+:::: {.column width="50%"}
+![](./images/demo.jpg){fig-align="center" width="100%"}
+
+<div style="text-align: center; font-size: 0.6em; color: gray;">
+*Meme Illustration*
+</div>
+::::
+
+:::: {.column width="50%"}
+### The Visuals
+
+The image on the left demonstrates the visual impact of the project.
+
+1.  **High engagement**
+2.  **Viral potential**
+3.  **Clear messaging**
+::::
+
+:::::
+
+## Image with Centered Caption {#centered-caption}
+
+![](./images/system_architecture.png){fig-align="center" width="60%"}
+
+<div style="text-align: center; font-size: 0.8em; color: gray;">
+*Figure 1: System Architecture Diagram showing the interaction between components*
+</div>
+
+## Callouts & Alerts {#callouts}
+
+::: {.callout-note}
+### Note
+This is a standard note callout. Good for general information.
+:::
+
+::: {.callout-important}
+### Important
+This information is crucial and should not be ignored.
+:::
+
+::: {.callout-tip}
+### Tip
+Pro tip: Use callouts to highlight key takeaways!
+:::
+
+## Fragments (Animations) {#fragments}
+
+Items will appear one by one:
+
+::: {.incremental}
+- First item appears
+- Then the second item
+- Finally the third item
+:::
+
+. . .
+
+**Pause!** This text appears after a click.
+
+## Tabsets for Code {#tabsets}
+
+::: {.panel-tabset}
+
+### Python
+
+```python
+def hello():
+    print("Hello World")
+```
+
+### TypeScript
+
+```typescript
+const hello = (): void => {
+    console.log("Hello World");
+}
+```
+
+### Rust
+
+```rust
+fn main() {
+    println!("Hello World");
+}
+```
+
+:::
+
+# Full Scale Image {#full-scale-image}
+
+![](./images/logo_optimized.png){width=300 style="margin: 20px auto; display: block;"}
+
+## Custom CSS In-Slide {#custom-css}
+
+<style>
+.custom-box {
+    border: 2px dashed #4287f5;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f0f7ff;
+    text-align: center;
+}
+</style>
+
+<div class="custom-box">
+  <h3>Custom Styled Box</h3>
+  <p>This box is styled using inline CSS just for this slide.</p>
+</div>
+
+# Advanced Features {#advanced-features}
+
+
+
+## Interactive Charts (OJS) {#ojs-charts}
+
+Great for Tech Leads pitching data!
+
+```{ojs}
+data = [
+  { name: "Q1", value: 100 },
+  { name: "Q2", value: 150 },
+  { name: "Q3", value: 130 },
+  { name: "Q4", value: 200 }
+]
+
+Plot.plot({
+  marks: [
+    Plot.barY(data, {x: "name", y: "value", fill: "steelblue"}),
+    Plot.text(data, {x: "name", y: "value", text: "value", dy: -10}),
+    Plot.ruleY([0])
+  ]
+})
+```
+
+
+## {auto-animate="true" #report-setup}
+
+```python
+def generate_report(data):
+    # Setup report configuration
+    config = {
+        "title": "Monthly Report",
+        "timestamp": "2024-03-20"
+    }
+
+    return config
+```
+
+## {auto-animate="true" #report-full}
+
+```python
+def generate_report(data):
+    # Setup report configuration
+    config = {
+        "title": "Monthly Report",
+        "timestamp": "2024-03-20"
+    }
+
+    # Calculate summary statistics
+    config["total"] = sum(data)
+    config["average"] = sum(data) / len(data)
+    config["status"] = "Published"
+
+    return config
+```
+
+## Slide Backgrounds {#slide-backgrounds background-image="./images/demo.jpg" background-opacity=0.2}
+
+You can set full-screen background images.
+
+- Good for cover slides
+- Separation sections
+- Emotional impact
+
+## Absolute Position {#absolute-position}
+
+Position elements precisely where you want them.
+
+![](./images/demo.jpg){.absolute top="100" left="0" width="100" height="auto"}
+
+![](./images/any-question.png){.absolute top="200" right="50" width="150" height="auto"}
+
+![](./images/tau-apa-tentang-sql-agent.png){.absolute bottom="0" left="300" width="200" height="auto"}
+
+## Stack Layout (Overlays) {#stack-layout}
+
+::: r-stack
+![](./images/demo.jpg){.fragment width="400" height="400"}
+![](./images/any-question.png){.fragment width="300" height="300"}
+![](./images/tau-apa-tentang-sql-agent.png){.fragment width="200" height="200"}
+:::
+
+**Images are stacked on top of each other!**
+
+## Advanced Fragments {#advanced-fragments}
+
+Animate text elements with different effects:
+
+::: {.fragment .fade-up}
+This text slides up while fading in.
+:::
+
+::: {.fragment .highlight-red}
+This text turns red when focused.
+:::
+
+::: {.fragment .strike}
+This text gets crossed out.
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+This text fades in, then fades out partially.
+:::
+
+## Academic Citations {#citations}
+
+"Attention is all you need" paper [@vaswani2017attention] changed the AI landscape.
+Also, clean code is important [@cleanarchitecture].
+
+::: {.aside}
+This is an aside / footnote for extra context.
+:::
+
+## References {#references}
+
+::: {#refs}
+:::
+
+<div style="text-align: center;">
+
+## Q&A {#qa}
+
+![](./images/any-question.png){width=300 style="margin: 20px auto; display: block;"}
+
+### Thank you for listening!
+
+</div>
